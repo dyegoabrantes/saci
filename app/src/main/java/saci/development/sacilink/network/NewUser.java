@@ -35,7 +35,7 @@ public class NewUser extends Thread {
 
     public void run(){
 
-        String stringURL = "http://10.0.72.210:3000/api/usuarios";
+        String stringURL = "http://10.0.1.33:3000/api/usuarios";
 
         try {
             URL url = new URL(stringURL);

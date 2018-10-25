@@ -18,10 +18,9 @@ public class User {
 
     }
 
-    public String getId() {
+    public String get_id() {
         return _id;
     }
-
 
     public String getEmail() {
         return email;
@@ -34,6 +33,7 @@ public class User {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
     public String getSenha() {
         return senha;
     }
