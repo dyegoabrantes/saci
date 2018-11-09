@@ -16,22 +16,14 @@
             android:id="@+id/nav_modoAutomatico1"
             android:icon="@drawable/ic_autorenew_black_24dp"
             android:title="Modo automático" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Conexão">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_conecta"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Conectar estufa" />
         </menu>
     </item>
 

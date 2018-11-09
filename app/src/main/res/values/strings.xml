@@ -23,4 +23,5 @@
         completions."
     </string>
     <string name="title_activity_modo_manual">ModoManual</string>
+    <string name="title_activity_conectar_estufa">conectarEstufa</string>
 </resources>
