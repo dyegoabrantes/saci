@@ -21,6 +21,7 @@ public class logInActivity extends AppCompatActivity {
     EditText senha;
     LogIn login;
     Button loginButton;
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class logInActivity extends AppCompatActivity {
         senha = findViewById( R.id.Usenha );
 
         loginButton = findViewById(R.id.LogginButton);
+        registerButton = findViewById(R.id.registerButton);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,12 +45,23 @@ public class logInActivity extends AppCompatActivity {
             }
         });
 
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(email != null && senha != null){
+                    Intent home = new Intent(logInActivity.this, CadastroActivity.class);
+                    home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(home);
+                }
+            }
+        });
+
+
     }
 
     public void logado(){
-        Intent home = new Intent(this, MainActivity.class);
-        home.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(home);
+        Intent regestre = new Intent(this, MainActivity.class);
+        startActivity(regestre);
     }
 
 }
