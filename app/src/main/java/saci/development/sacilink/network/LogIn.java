@@ -1,5 +1,6 @@
 package saci.development.sacilink.network;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,12 +26,12 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 public class LogIn extends Thread {
 
-    MainActivity activity;
+    logInActivity activity;
     String email;
     String senha;
     HttpURLConnection conn;
 
-    public LogIn(String uemail, String usenha ){
+    public LogIn(String uemail, String usenha, logInActivity activity ){
         email = uemail;
         senha = usenha;
         this.activity = activity;
@@ -56,22 +57,21 @@ public class LogIn extends Thread {
 
             Log.i("JSON", jsonParam.toString());
             DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-         //   os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
             os.writeBytes(jsonParam.toString());
 
             os.flush();
             os.close();
             Handler myHandler = new Handler(Looper.getMainLooper());
 
-            /*if (conn.getResponseCode() == 200){
-                activity.runOnUiThread(new Runnable()
-                {
-                    public void run()
-                    {
-                        Toast.makeText(context, "Hello World!", Toast.LENGTH.SHORT).show();
+            if(conn.getResponseMessage().equals("OK")) {
+                activity.logado();
+            } else {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Usuário e/ou senha incorreto", Toast.LENGTH_SHORT).show();
                     }
                 });
-            }*/
+            }
 
             Log.i("STATUS", String.valueOf(conn.getResponseCode()));
             Log.i("MSG" , conn.getResponseMessage());

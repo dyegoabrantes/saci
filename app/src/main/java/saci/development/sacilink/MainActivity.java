@@ -30,8 +30,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MqttCallback {
 
-    boolean isLogged = false;
     DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +43,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        if (isLogged == false){
-            goCadastro.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(goCadastro);
-        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -75,11 +72,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

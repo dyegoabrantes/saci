@@ -55,6 +55,8 @@ public class CadastroActivity extends AppCompatActivity {
         newUser = new NewUser( novoUsuario );
         newUser.start();
 
+        Intent login = new Intent(this, logInActivity.class);
+        startActivity(login);
     }
 
     public void cadastrado(){
