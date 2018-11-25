@@ -20,13 +20,17 @@ import android.view.WindowManager;
 
 import com.google.android.things.pio.Gpio;
 
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MqttCallback {
+
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +39,45 @@ public class MainActivity extends AppCompatActivity
 
         Intent goCadastro = new Intent(this, CadastroActivity.class);
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.main_drawer);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_main);
-        navigationView.setNavigationItemSelectedListener(this);
+
+        /*try {
+            MqttClient client = new MqttClient("192.168.1.4:1883", "SmatphoneA1Pro777", new MemoryPersistence());
+            client.setCallback(this);
+            client.connect();
+
+            String topic = "umidade_e_temperatura";
+            client.subscribe(topic);
+
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }*/
 
     }
 
     @Override
     public void onBackPressed() {
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
 
     }
 
@@ -64,21 +88,33 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_status) {
-            Intent goHome = new Intent(this, MainActivity.class);
-            goHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(goHome);
+
         } else if (id == R.id.nav_modoManual) {
             Intent goManual = new Intent(this, ModoManual.class);
             startActivity(goManual);
         } else if (id == R.id.nav_modoAutomatico) {
 
         }  else if (id == R.id.nav_conecta) {
-
+            Intent goConexao = new Intent(this, conectarEstufa.class);
+            startActivity(goConexao);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    @Override
+    public void connectionLost(Throwable cause) {
+
+    }
+
+    @Override
+    public void messageArrived(String topic, MqttMessage message) throws Exception {
+
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {
+
+    }
 }

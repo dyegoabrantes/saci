@@ -39,6 +39,9 @@ public class ModoManual extends AppCompatActivity
     ToggleButton alteraTroca;
     ToggleButton alteraRega;
 
+    DrawerLayout drawer;
+    NavigationView navigationView;
+
     private AlertDialog alerta;
 
     @Override
@@ -47,19 +50,22 @@ public class ModoManual extends AppCompatActivity
         setContentView(R.layout.activity_modo_manual2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        drawer = (DrawerLayout) findViewById(R.id.modo_manual_drawer);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view_modo_manual);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(1).setChecked(true);
+
         alteraIluminacao = findViewById(R.id.alteraIluminacao);
         alteraCorrente = findViewById(R.id.alteraCorrente);
         alteraTroca = findViewById(R.id.alteraTroca);
         alteraRega = findViewById(R.id.alteraRega);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_manual);
-        navigationView.setNavigationItemSelectedListener(this);
 
         alteraIluminacao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -104,7 +110,6 @@ public class ModoManual extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -121,25 +126,25 @@ public class ModoManual extends AppCompatActivity
 
 
     @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_status1) {
+        if (id == R.id.nav_status) {
             Intent goHome = new Intent(this, MainActivity.class);
             goHome.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(goHome);
-        } else if (id == R.id.nav_modoManual1) {
-            Intent goManual = new Intent(this, ModoManual.class);
-            startActivity(goManual);
-        } else if (id == R.id.nav_modoAutomatico1) {
+        } else if (id == R.id.nav_modoManual) {
+
+        } else if (id == R.id.nav_modoAutomatico) {
 
         } else if (id == R.id.nav_conecta) {
-
+            Intent goConexao = new Intent(this, conectarEstufa.class);
+            startActivity(goConexao);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
