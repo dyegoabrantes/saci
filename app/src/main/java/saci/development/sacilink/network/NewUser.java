@@ -34,7 +34,7 @@ public class NewUser extends Thread {
 
     public void run(){
 
-        String stringURL = "http://10.0.1.33:3000/api/usuarios";
+        String stringURL = "http://10.0.77.249:3000/api/usuarios";
 
         try {
             URL url = new URL(stringURL);
@@ -57,7 +57,7 @@ public class NewUser extends Thread {
             os.flush();
             os.close();
 
-            if(conn.getResponseMessage().equals("OK")) {
+            if(conn.getResponseMessage().equals("Created")) {
                 activity.cadastrado();
             } else {
                 activity.runOnUiThread(new Runnable() {
