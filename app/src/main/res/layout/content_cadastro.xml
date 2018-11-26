@@ -123,7 +123,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:background="@color/colorCharlestonGreen"
-        android:onClick="adicionar"
         android:padding="10dp"
         android:text="cadastre-se"
         android:textColor="@color/colorMikkadoYellow"

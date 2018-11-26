@@ -39,7 +39,7 @@ public class logInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(email != null && senha != null){
-                    login = new LogIn( email.getText().toString(), senha.getText().toString(), logInActivity.this );
+                    login = new LogIn(email.getText().toString(), senha.getText().toString(), logInActivity.this );
                     login.start();
                 }
             }

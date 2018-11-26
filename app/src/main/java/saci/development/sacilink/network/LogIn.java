@@ -61,7 +61,6 @@ public class LogIn extends Thread {
 
             os.flush();
             os.close();
-            Handler myHandler = new Handler(Looper.getMainLooper());
 
             if(conn.getResponseMessage().equals("OK")) {
                 activity.logado();

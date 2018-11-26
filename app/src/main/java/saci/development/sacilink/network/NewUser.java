@@ -24,11 +24,10 @@ import saci.development.sacilink.transactions.User;
 public class NewUser extends Thread {
 
     User user;
-    MainActivity activity;
-    CadastroActivity cadastroActivity;
     HttpURLConnection conn;
+    CadastroActivity activity;
 
-    public NewUser(User newUser ){
+    public NewUser(User newUser, CadastroActivity activity ){
         user = newUser;
         this.activity = activity;
     }
@@ -53,11 +52,20 @@ public class NewUser extends Thread {
 
             Log.i("JSON", jsonParam.toString());
             DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-         //   os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
             os.writeBytes(jsonParam.toString());
 
             os.flush();
             os.close();
+
+            if(conn.getResponseMessage().equals("OK")) {
+                activity.cadastrado();
+            } else {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(activity, "Não foi possível cadastrar o usuário", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
 
             Log.i("STATUS", String.valueOf(conn.getResponseCode()));
             Log.i("MSG" , conn.getResponseMessage());
