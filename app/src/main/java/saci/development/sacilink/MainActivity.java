@@ -1,10 +1,14 @@
 package saci.development.sacilink;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.google.android.things.pio.Gpio;
 
@@ -32,6 +37,10 @@ public class MainActivity extends AppCompatActivity
 
     boolean isLogged = false;
     DrawerLayout drawer;
+
+    Intent intentService;
+    TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity
             goCadastro.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(goCadastro);
         }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -71,6 +81,31 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }*/
 
+        textView = (TextView) findViewById(R.id.statusLuz);
+
+        intentService= new Intent(this, Monitora.class);
+        this.startService(intentService);
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        int luz = intent.getIntExtra("luz_estado", 0);
+                        if (luz == 0) {
+                            textView.setText("Iluminação desligada");
+                        }else {
+                            if (luz == 1) {
+                                textView.setText("Iluminação ligada");
+                            }else {
+                                textView.setText("ERRO");
+                                System.out.println(luz);
+                            }
+
+                        }
+
+                    }
+                }, new IntentFilter(Monitora.UPDATEVIEW)
+        );
     }
 
     @Override

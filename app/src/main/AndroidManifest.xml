@@ -39,7 +39,11 @@
         <activity
             android:name=".conectarEstufa"
             android:label="@string/title_activity_conectar_estufa"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".Monitora"
+            android:exported="false"></service>
     </application>
 
 </manifest>

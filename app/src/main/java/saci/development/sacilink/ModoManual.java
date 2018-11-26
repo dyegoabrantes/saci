@@ -48,7 +48,7 @@ public class ModoManual extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modo_manual2);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_modo_maual);
 
         drawer = (DrawerLayout) findViewById(R.id.modo_manual_drawer);
 
