@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "258095676881",
+    "firebase_url": "https://saci-2fef1.firebaseio.com",
+    "project_id": "saci-2fef1",
+    "storage_bucket": "saci-2fef1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258095676881:android:e5c49db92b845c4a",
+        "android_client_info": {
+          "package_name": "saci.development.sacilink"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "258095676881-j78uti6dfmla5uk7il42337lcgf7067s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "saci.development.sacilink",
+            "certificate_hash": "104841cd689d7defbdc66f11a80622901fce0118"
+          }
+        },
+        {
+          "client_id": "258095676881-gptvrvjru6h4b44nkmd6q4vtfcr3dgvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqv38FRYuN4s3n1BiAJBuKx0UUZmMUAyw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "258095676881-gptvrvjru6h4b44nkmd6q4vtfcr3dgvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
