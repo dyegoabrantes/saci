@@ -18,7 +18,9 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.facebook.login.LoginManager;
 import com.google.android.things.pio.Gpio;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -37,8 +39,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent goCadastro = new Intent(this, CadastroActivity.class);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -54,20 +54,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-
-        /*try {
-            MqttClient client = new MqttClient("192.168.1.4:1883", "SmatphoneA1Pro777", new MemoryPersistence());
-            client.setCallback(this);
-            client.connect();
-
-            String topic = "umidade_e_temperatura";
-            client.subscribe(topic);
-
-        } catch (MqttException e) {
-            e.printStackTrace();
-        }*/
-
     }
 
     @Override
@@ -97,6 +83,11 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_conecta) {
             Intent goConexao = new Intent(this, conectarEstufa.class);
             startActivity(goConexao);
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            LoginManager.getInstance().logOut();
+            Intent goLogin = new Intent(this, logInActivity.class);
+            startActivity(goLogin);
         }
 
         drawer.closeDrawer(GravityCompat.START);
