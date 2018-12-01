@@ -83,6 +83,9 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_conecta) {
             Intent goConexao = new Intent(this, conectarEstufa.class);
             startActivity(goConexao);
+        } else if (id == R.id.nav_map) {
+            Intent goMaps = new Intent(this, MapsActivity.class);
+            startActivity(goMaps);
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             LoginManager.getInstance().logOut();
