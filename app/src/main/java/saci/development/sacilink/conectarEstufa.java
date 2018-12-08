@@ -42,7 +42,6 @@ public class  conectarEstufa extends AppCompatActivity
         toggle.syncState();
 
 
-
     }
 
     @Override

@@ -30,7 +30,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import saci.development.sacilink.network.Controle;
 public class ModoManual extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -70,9 +70,11 @@ public class ModoManual extends AppCompatActivity
         alteraIluminacao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    // The toggle is enabled
+                    Controle controle = new Controle("ledacende");
+                    controle.start();
                 } else {
-                    // The toggle is disabled
+                    Controle controle = new Controle("ledapaga");
+                    controle.start();
                 }
             }
         });

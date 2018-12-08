@@ -39,7 +39,13 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
 
     Intent intentService;
-    TextView textView;
+    TextView textViewStatusLuz;
+    TextView textViewStatusRega;
+    TextView textViewStatusVentila;
+    TextView textViewStatusTrocaAr;
+    TextView textViewStatusTemperatura;
+    TextView textViewStatusUmidadeAr;
+    TextView textViewStatusumidadeSolo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,28 +86,42 @@ public class MainActivity extends AppCompatActivity
         } catch (MqttException e) {
             e.printStackTrace();
         }*/
-
-        textView = (TextView) findViewById(R.id.statusLuz);
-
         intentService= new Intent(this, Monitora.class);
         this.startService(intentService);
+
+        textViewStatusLuz = (TextView) findViewById(R.id.statusLuz);
+        textViewStatusRega = findViewById(R.id.statusIrriga);
+        textViewStatusVentila = findViewById(R.id.statusVentila);
+        // textViewStatusVentila = findViewById(R.id.statusTrocaAr);
+        textViewStatusTemperatura = findViewById(R.id.textViewTemperatura);
+        textViewStatusUmidadeAr = findViewById(R.id.textViewUmidadeAr);
+        textViewStatusumidadeSolo = findViewById(R.id.textViewUmidadeSolo);
+
+
 
         LocalBroadcastManager.getInstance(this).registerReceiver(
                 new BroadcastReceiver() {
                     @Override
                     public void onReceive(Context context, Intent intent) {
-                        int luz = intent.getIntExtra("luz_estado", 0);
-                        if (luz == 0) {
-                            textView.setText("Iluminação desligada");
+                        int ilumina = (int) intent.getExtras().get("ilumina");
+
+                        if (ilumina == 0) {
+                            textViewStatusLuz.setText("Iluminação desligada");
                         }else {
-                            if (luz == 1) {
-                                textView.setText("Iluminação ligada");
+                            if (ilumina == 1) {
+                                textViewStatusLuz.setText("Iluminação ligada");
                             }else {
-                                textView.setText("ERRO");
-                                System.out.println(luz);
+                                textViewStatusLuz.setText("ERRO");
+                                System.out.println(ilumina);
                             }
 
                         }
+
+                        String temperatura = intent.getExtras().get("temperatura").toString();
+                        textViewStatusTemperatura.setText(temperatura+" ºC");
+
+                        String umidadeAr = intent.getExtras().get("umidade").toString();
+                        textViewStatusUmidadeAr.setText(umidadeAr);
 
                     }
                 }, new IntentFilter(Monitora.UPDATEVIEW)

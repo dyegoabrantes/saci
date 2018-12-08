@@ -39,22 +39,32 @@ public class Monitora extends IntentService {
     public void onCreate() {
         super.onCreate();
         intent = new Intent(UPDATEVIEW);
+        System.out.println("iniciaIntent");
     }
 
-    private void sendBroadcastMessage(int res) {
-        intent.putExtra("luz_estado", res);
+    private void sendBroadcastMessage(int temperatura, int umidade, int ilumina) {
+        int estadoLed;
+        if (ilumina == 0){
+            estadoLed = 1;
+        }else{
+            estadoLed = 0;
+        }
+
+        intent.putExtra("ilumina", estadoLed);
+        intent.putExtra("temperatura", temperatura);
+        intent.putExtra("umidade", umidade);
         intent.setAction(UPDATEVIEW);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     @Override
-    public int onStartCommand(final Intent intent, int flags, int startId) {
+        public int onStartCommand(final Intent intent, int flags, int startId) {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 while(true)
                 {
-                    String stringURL = "http://192.168.1.6:3000/api/mosca/getstate";
+                    String stringURL = "http://192.168.1.9:3000/api/mosca/getstate";
                     String estadoAtual;
                     try {
                         URL url = new URL(stringURL);
@@ -73,6 +83,7 @@ public class Monitora extends IntentService {
 
                         os.flush();
                         os.close();
+
                         Handler myHandler = new Handler(Looper.getMainLooper());
 
                         Log.i("STATUS", String.valueOf(conn.getResponseCode()));
@@ -87,9 +98,12 @@ public class Monitora extends IntentService {
                             result.append(line);
                         }
                         String json = result.toString();
+                        Log.i("jsonObtido",json);
                         JSONObject jo = new JSONObject(json);
-                        int resultado = jo.getInt("estado");
-                        sendBroadcastMessage(resultado);
+                        int temperatura = jo.getInt("temperatura");
+                        int umidade = jo.getInt("umidade");
+                        int ilumina = jo.getInt("estadoLed");
+                        sendBroadcastMessage(temperatura, umidade, ilumina);
                         in.close();
                         conn.disconnect();
                     } catch( MalformedURLException ex ){
