@@ -24,4 +24,8 @@
     </string>
     <string name="title_activity_modo_manual">ModoManual</string>
     <string name="title_activity_conectar_estufa">conectarEstufa</string>
+
+    <string name="facebook_app_id">754121451602122</string>
+    <string name="fb_login_protocol_scheme">fb754121451602122</string>
+    <string name="title_activity_maps">Localização</string>
 </resources>

@@ -23,7 +23,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.android.things.pio.Gpio;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -35,7 +37,6 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MqttCallback {
 
-    boolean isLogged = false;
     DrawerLayout drawer;
 
     Intent intentService;
@@ -52,16 +53,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent goCadastro = new Intent(this, CadastroActivity.class);
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        if (isLogged == false){
-            goCadastro.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(goCadastro);
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -130,11 +125,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -153,6 +150,14 @@ public class MainActivity extends AppCompatActivity
         }  else if (id == R.id.nav_conecta) {
             Intent goConexao = new Intent(this, conectarEstufa.class);
             startActivity(goConexao);
+        } else if (id == R.id.nav_map) {
+            Intent goMaps = new Intent(this, MapsActivity.class);
+            startActivity(goMaps);
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            LoginManager.getInstance().logOut();
+            Intent goLogin = new Intent(this, logInActivity.class);
+            startActivity(goLogin);
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -2,13 +2,11 @@ package saci.development.sacilink;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import saci.development.sacilink.network.NewUser;
 import saci.development.sacilink.transactions.User;
@@ -17,11 +15,10 @@ public class CadastroActivity extends AppCompatActivity {
 
     EditText edtEmail;
     EditText edtSenha;
-
-    NewUser newUser;
+    EditText editRepeteSenha;
 
     Button goLogin;
-    Button goCadastro;
+    Button buttonCadastro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +27,10 @@ public class CadastroActivity extends AppCompatActivity {
 
         edtEmail = findViewById( R.id.editEmail );
         edtSenha = findViewById( R.id.editSenha );
+        editRepeteSenha = findViewById( R.id.editRepeteSenha);
 
         goLogin = (Button)findViewById(R.id.goLogin);
-        goCadastro = (Button)findViewById(R.id.buttonCadastro);
+        buttonCadastro = (Button)findViewById(R.id.buttonCadastro);
 
         final Intent goLoginIntent = new Intent(this, logInActivity.class);
 
@@ -43,25 +41,28 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
-    }
+        buttonCadastro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = edtEmail.getText().toString();
+                String senha = edtSenha.getText().toString();
+                String repeteSenha = editRepeteSenha.getText().toString();
 
-    public void adicionar( View view ){
+                if(!senha.equals(repeteSenha)) {
+                    Toast.makeText(CadastroActivity.this, "Senhas não coincidem", Toast.LENGTH_SHORT).show();
+                } else {
+                    User novoUsuario = new User(email, senha);
 
-        String email = edtEmail.getText().toString();
-        String senha = edtSenha.getText().toString();
-
-        User novoUsuario = new User( email, senha );
-
-        newUser = new NewUser( novoUsuario );
-        newUser.start();
+                    NewUser newUser = new NewUser(novoUsuario, CadastroActivity.this);
+                    newUser.start();
+                }
+            }
+        });
 
     }
 
     public void cadastrado(){
-
-        Intent goLogin = new Intent(this, logInActivity.class);
-        goLogin.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(goLogin);
+        Intent login = new Intent(this, logInActivity.class);
+        startActivity(login);
     }
-
 }
